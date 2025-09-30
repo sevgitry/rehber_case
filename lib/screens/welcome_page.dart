@@ -13,10 +13,10 @@ class WelcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'WhatsApp Clone Demo',
+              'WhatsApp Demo',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => Navigator.push(
                 context,
@@ -24,6 +24,7 @@ class WelcomePage extends StatelessWidget {
               ),
               child: const Text('Giriş Yap'),
             ),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => Navigator.push(
                 context,
