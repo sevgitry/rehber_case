@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/contact.dart';
 import '../providers/contacts_provider.dart';
 import 'chat_page.dart';
 import 'add_contact_page.dart';
@@ -13,7 +12,6 @@ class ContactsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final contactsAsync = ref.watch(contactsListProvider);
 
-    // İlk build’de verileri yükle
     ref.read(contactsListProvider.notifier).fetchContacts(userId);
 
     return Scaffold(

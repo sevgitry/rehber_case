@@ -42,8 +42,7 @@ class _AddContactPageState extends ConsumerState<AddContactPage> {
                   name: _nameController.text.trim(),
                   phoneNumber: _phoneController.text.trim(),
                 );
-                if (mounted)
-                  Navigator.pop(context); // ekledikten sonra geri dön
+                if (mounted) Navigator.pop(context);
               },
               child: const Text("Kaydet"),
             ),

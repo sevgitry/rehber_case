@@ -5,7 +5,6 @@ import '../models/contact.dart';
 class ContactsListNotifier extends StateNotifier<AsyncValue<List<Contact>>> {
   ContactsListNotifier() : super(const AsyncLoading());
 
-  /// Kullanıcının rehberini getir
   Future<void> fetchContacts(String userId) async {
     try {
       state = const AsyncLoading();
@@ -21,7 +20,6 @@ class ContactsListNotifier extends StateNotifier<AsyncValue<List<Contact>>> {
     }
   }
 
-  /// Yeni kişi ekle ve listeyi güncelle
   Future<void> addContact({
     required String userId,
     required String name,
@@ -35,7 +33,7 @@ class ContactsListNotifier extends StateNotifier<AsyncValue<List<Contact>>> {
         'phone_number': phoneNumber,
         'created_at': DateTime.now().toIso8601String(),
       });
-      await fetchContacts(userId); // ekledikten sonra listeyi yenile
+      await fetchContacts(userId);
     } catch (e, st) {
       state = AsyncError(e, st);
     }
@@ -46,3 +44,14 @@ final contactsListProvider =
     StateNotifierProvider<ContactsListNotifier, AsyncValue<List<Contact>>>(
       (ref) => ContactsListNotifier(),
     );
+final contactsProvider = FutureProvider.autoDispose
+    .family<List<Contact>, String>((ref, userId) async {
+      final response = await Supabase.instance.client
+          .from('contacts')
+          .select()
+          .eq('user_id', userId)
+          .order('created_at', ascending: true);
+
+      final data = response as List<dynamic>;
+      return data.map((c) => Contact.fromMap(c)).toList();
+    });

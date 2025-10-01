@@ -47,7 +47,6 @@ class _LoginPageState extends State<LoginPage> {
         password: password,
       );
       if (res.user != null) {
-        // Giriş yapıldıktan sonra online güncelle
         await supabase
             .from('profiles')
             .update({
