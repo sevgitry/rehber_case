@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mbsb/screens/add_contact_page.dart';
 import 'contacts_page.dart';
+import 'add_contact_page.dart';
 
 class HomePage extends StatelessWidget {
   final String userId;
-  HomePage({super.key, required this.userId});
+  const HomePage({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {

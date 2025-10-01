@@ -23,16 +23,16 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       final res = await supabase.auth.signUp(
         email: _emailController.text.trim(),
-        password: _passwordController.text,
+        password: _passwordController.text.trim(),
       );
 
       if (res.user != null) {
-        // RLS uyumlu: id = auth.uid()
         await supabase.from('profiles').insert({
           'id': res.user!.id,
-          'name': _nameController.text.trim(), // sadece name
+          'name': _nameController.text.trim(),
           'phone_number': _phoneController.text.trim(),
           'is_online': false,
+          'last_seen': DateTime.now().toIso8601String(),
           'created_at': DateTime.now().toIso8601String(),
         });
 
@@ -40,7 +40,6 @@ class _RegisterPageState extends State<RegisterPage> {
           const SnackBar(content: Text("Kayıt başarılı! Lütfen giriş yapın.")),
         );
 
-        // Kayıt sonrası LoginPage'e yönlendir
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (_) => LoginPage()),
@@ -49,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'Kayıt başarısız. Lütfen bilgilerinizi kontrol edin.',
+              "Kayıt başarısız. Lütfen bilgilerinizi kontrol edin.",
             ),
           ),
         );
@@ -57,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text("Hata: $e")));
+      ).showSnackBar(SnackBar(content: Text("Hata: ${e.toString()}")));
     } finally {
       setState(() => _isLoading = false);
     }
@@ -68,8 +67,8 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context), // geri git
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
         ),
         title: const Text("Kayıt Ol"),
       ),
@@ -81,13 +80,12 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               TextField(
                 controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                ), // sadece name
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
               TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
               ),
               TextField(
                 controller: _phoneController,
