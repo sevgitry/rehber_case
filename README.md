@@ -1,4 +1,4 @@
-# mbsb
+# Whatsapp Clone Projesi
 
 A new Flutter project.
 
@@ -14,3 +14,8 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+Projeyi Flutter + Riverpod + Supabase teknolojilerini kullanarak yaptım. Aşağıda projenin görselleri bulunmaktadır.
+
+<img width="526" height="847" alt="1" src="https://github.com/user-attachments/assets/92726e76-6d1f-4563-8ae1-0324b319fd06" />
